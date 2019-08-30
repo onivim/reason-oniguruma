@@ -1,0 +1,13 @@
+(executable
+    (name OniguramaUnitTestRunner)
+    (public_name OniguramaUnitTestRunner)
+    (package onigurama-test)
+    (flags (:include flags_with_sanitize.sexp))
+    (libraries
+        OniguramaTest
+            ))
+
+(rule
+    (targets flags_with_sanitize.sexp)
+    (deps (:discover ../../config/discover.exe))
+    (action (run %{discover})))
