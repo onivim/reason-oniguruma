@@ -1,0 +1,1 @@
+Oniguruma.TestFramework.cli();

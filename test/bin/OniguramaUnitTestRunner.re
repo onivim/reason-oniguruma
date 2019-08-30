@@ -1,1 +1,0 @@
-TreeSitterTest.TestFramework.cli();
