@@ -1,2 +1,2 @@
-# reason-onigurama
-ReasonML bindings for the Onigurama RegEx engine
+# reason-oniguruma
+ReasonML bindings for the Oniguruma RegEx engine
