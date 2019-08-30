@@ -19,17 +19,17 @@ let get_os =
         | "Linux" -> Linux
         | _ -> Unknown
 
-let oniguramaIncludePath = Sys.getenv "ONIGURAMA_INCLUDE_PATH"
-let oniguramaLibPath = Sys.getenv "ONIGURAMA_LIB_PATH"
-let c_flags = ["-I"; oniguramaIncludePath; "-I"; oniguramaLibPath ]
+let onigurumaIncludePath = Sys.getenv "ONIGURUMA_INCLUDE_PATH"
+let onigurumaLibPath = Sys.getenv "ONIGURUMA_LIB_PATH"
+let c_flags = ["-I"; onigurumaIncludePath; "-I"; onigurumaLibPath ]
 
-let _ = print_endline (oniguramaIncludePath)
-let _ = print_endline (oniguramaLibPath)
+let _ = print_endline (onigurumaIncludePath)
+let _ = print_endline (onigurumaLibPath)
 
 let ccopt s = ["-ccopt"; s]
 let cclib s = ["-cclib"; s]
 
-let libPath = "-L" ^ oniguramaLibPath
+let libPath = "-L" ^ onigurumaLibPath
 
 let flags = []
         @ ccopt(libPath)

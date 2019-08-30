@@ -1,7 +1,7 @@
 (library
-    (name OniguramaTest)
-    (public_name onigurama-test)
+    (name OnigurumaTest)
+    (public_name oniguruma-test)
     (flags (:standard (-w -39)))
     (ocamlopt_flags -linkall -g)
-    (libraries rely.lib onigurama)
+    (libraries rely.lib oniguruma)
 )

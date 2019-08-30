@@ -1,6 +1,6 @@
 (library
-    (name onigurama)
-    (public_name onigurama)
+    (name oniguruma)
+    (public_name oniguruma)
     (library_flags (:include flags.sexp))
     (c_flags (:include c_flags.sexp))
     (c_names bindings)

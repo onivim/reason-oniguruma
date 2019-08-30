@@ -1,10 +1,10 @@
 (executable
-    (name OniguramaUnitTestRunner)
-    (public_name OniguramaUnitTestRunner)
-    (package onigurama-test)
+    (name OnigurumaUnitTestRunner)
+    (public_name OnigurumaUnitTestRunner)
+    (package oniguruma-test)
     (flags (:include flags_with_sanitize.sexp))
     (libraries
-        OniguramaTest
+        OnigurumaTest
             ))
 
 (rule
