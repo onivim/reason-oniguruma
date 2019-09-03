@@ -1,7 +1,7 @@
 {
   "source": "./package.json",
   "scripts": {
-    "run": "esy '@test' x TreeSitterUnitTestRunner"
+    "run": "esy '@test' x OnigurumaUnitTestRunner"
   },
   "override": {
       "build": ["dune build --root . -j4"],
@@ -10,8 +10,8 @@
           "@reason-native/rely": "2.2.0"
       },
       "install": [
-          "esy-installer treesitter.install",
-          "esy-installer treesitter-test.install"
+          "esy-installer oniguruma.install",
+          "esy-installer oniguruma-test.install"
       ]
   }
 }
