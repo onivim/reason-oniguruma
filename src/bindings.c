@@ -7,23 +7,89 @@
 #include <caml/threads.h>
 
 #include <oniguruma.h>
-#include <stdio.h>
 
-static int nerror = 0;
+//static int nerror = 0;
 
-static void xx(char *pattern, char* str, int from, int to, int mem, int not) {
+/*static void xx(char *pattern, char* str, int from, int to, int mem, int not) {
   regex_t *reg;
   OnigErrorInfo einfo;
 
-  FILE* err_file;
-  int r = onig_new(&reg, (UChar *)pattern, (UChar *)(pattern + strlen(pattern)),
-    ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF8, ONIG_SYNTAX_DEFAULT, &einfo);
+  int status = onig_new(&reg, (UChar *)pattern, (UChar *)(pattern + strlen(pattern)),
+    ONIG_OPTION_CAPTURE_GROUP, ONIG_ENCODING_UTF8, ONIG_SYNTAX_DEFAULT, &einfo);
 
- if (r) {
+ if (status != ONIG_NORMAL) {
     char s[ONIG_MAX_ERROR_MESSAGE_LEN];
     onig_error_code_to_str((UChar* )s, r, &einfo);
-    fprintf(err_file, "ERROR: %s\n", s);
+    printf("ERROR: %s\n", s);
     nerror++;
     return ;
   }
+
+  printf("SUCCESS");
+}*/
+
+typedef struct _regexp {
+  regex_t *regexp;
+} regexp_W;
+
+void reonig_finalize_regexp (value v) {
+  regexp_W *p;
+  p = (regexp_W *)Data_custom_val(v);
+  onig_free(p->regexp);
+};
+
+static struct custom_operations regexp_custom_ops = {
+  identifier : "regexp handling",
+  finalize : reonig_finalize_regexp,
+  compare : custom_compare_default,
+  hash : custom_hash_default,
+  serialize : custom_serialize_default,
+  deserialize : custom_deserialize_default
+};
+
+static value
+reonig_val_result_error(char *errorMsg) {
+  CAMLparam0();
+  CAMLlocal1(error);
+  error = caml_alloc(1, 1);
+  Store_field(error, 0, caml_copy_string(errorMsg));
+  CAMLreturn(error);
+}
+
+static value
+reonig_val_result_ok(value val) {
+  CAMLparam0();
+  CAMLlocal1(result);
+  result = caml_alloc(1, 0);
+  Store_field(result, 0, val);
+  CAMLreturn(result);
+}
+
+CAMLprim value
+reonig_create(value vPattern) {
+  CAMLparam1(vPattern);
+  CAMLlocal2(result, v);
+
+  regex_t *reg;
+  OnigErrorInfo einfo;
+
+  char *pattern = String_val(vPattern);
+  int status = onig_new(&reg, (UChar *)pattern, (UChar *)(pattern + strlen(pattern)),
+    ONIG_OPTION_CAPTURE_GROUP, ONIG_ENCODING_UTF8, ONIG_SYNTAX_DEFAULT, &einfo);
+
+  if (status != ONIG_NORMAL) {
+    char s[ONIG_MAX_ERROR_MESSAGE_LEN];
+    onig_error_code_to_str((UChar* )s, status, &einfo);
+    result = reonig_val_result_error(s);
+    onig_free(reg);
+  } else {
+  
+    regexp_W regexpWrapper;
+    regexpWrapper.regexp = reg;
+    v = caml_alloc_custom(&regexp_custom_ops, sizeof(regexp_W), 0, 1);
+    memcpy(Data_custom_val(v), &regexpWrapper, sizeof(regexp_W));
+    result = reonig_val_result_ok(v);
+  }
+
+  CAMLreturn(result);
 }

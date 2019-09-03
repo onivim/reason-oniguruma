@@ -1,1 +1,1 @@
-Oniguruma.TestFramework.cli();
+OnigurumaTest.TestFramework.cli();
