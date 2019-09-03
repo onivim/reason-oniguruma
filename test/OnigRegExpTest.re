@@ -53,11 +53,13 @@ describe("OnigRegExp", ({describe, _}) => {
         expect.int(result[0].startPos).toBe(4);
         expect.int(result[0].endPos).toBe(8);
         expect.int(result[0].index).toBe(0);
+        expect.string(result[0].match).toEqual("a123");
         expect.int(result[0].length).toBe(4);
         expect.int(result[1].startPos).toBe(5);
         expect.int(result[1].endPos).toBe(8);
         expect.int(result[1].index).toBe(1);
         expect.int(result[1].length).toBe(3);
+        expect.string(result[1].match).toEqual("123");
       }
       }
     });

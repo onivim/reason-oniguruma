@@ -8,27 +8,6 @@
 
 #include <oniguruma.h>
 
-// static int nerror = 0;
-
-/*static void xx(char *pattern, char* str, int from, int to, int mem, int not) {
-  regex_t *reg;
-  OnigErrorInfo einfo;
-
-  int status = onig_new(&reg, (UChar *)pattern, (UChar *)(pattern +
-strlen(pattern)), ONIG_OPTION_CAPTURE_GROUP, ONIG_ENCODING_UTF8,
-ONIG_SYNTAX_DEFAULT, &einfo);
-
- if (status != ONIG_NORMAL) {
-    char s[ONIG_MAX_ERROR_MESSAGE_LEN];
-    onig_error_code_to_str((UChar* )s, r, &einfo);
-    printf("ERROR: %s\n", s);
-    nerror++;
-    return ;
-  }
-
-  printf("SUCCESS");
-}*/
-
 typedef struct _regexp {
   regex_t *regexp;
 } regexp_W;
@@ -103,6 +82,10 @@ CAMLprim value reonig_create(value vPattern) {
 
   CAMLreturn(result);
 }
+
+CAMLprim value reonig_end() {
+  onig_end();
+};
 
 CAMLprim value reonig_search(value vStr, value vPos,
                              value vRegExp) {
