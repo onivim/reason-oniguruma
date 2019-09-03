@@ -38,7 +38,10 @@ let flags = []
 
 let flags_with_sanitize =
     match get_os with
-    | Linux -> flags @ ccopt("-fsanitize=address")
+    (* There is a known leak tracked here:
+       https://github.com/kkos/oniguruma/issues/31 
+       TODO: Investigate upgrading to bring back ASAN for this lib *)
+    (* | Linux -> flags @ ccopt("-fsanitize=address") *)
     | _ -> flags
 ;;
 
