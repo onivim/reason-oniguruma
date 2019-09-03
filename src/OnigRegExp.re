@@ -43,4 +43,9 @@ let search = (str: string, startPosition: int, regexp: t) => {
     }, matches);
 };
 
+let test = (str: string, regexp: t) => {
+    let matches = _search(str, 0, regexp);
+    Array.length(matches) > 0;
+};
+
 at_exit(_end);

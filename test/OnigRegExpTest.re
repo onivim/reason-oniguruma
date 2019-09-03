@@ -31,6 +31,20 @@ describe("OnigRegExp", ({describe, _}) => {
       
     });
   });
+  describe("test", ({test, _}) => {
+
+    test("increase indent pattern", ({ expect, _}) => {
+        let r = 
+        OnigRegExp.create("^((?!\\/\\/).)*(\\{[^}\"'`]*|\\([^)\"'`]*|\\[[^\\]\"'`]*)$");
+
+        switch (r) {
+        | Error(_) => expect.string("Fail").toEqual("");
+        | Ok(regex) => 
+          expect.bool(OnigRegExp.test("{", regex)).toBe(true);
+          expect.bool(OnigRegExp.test("abc", regex)).toBe(false);
+        }
+    });
+   });
   describe("search", ({test, _}) => {
 
     test("returns empty array if it does not match", ({ expect, _}) => {
