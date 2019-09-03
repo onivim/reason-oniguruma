@@ -141,8 +141,10 @@ CAMLprim value reonig_search(value vStr, value vPos,
 
       Store_field(ret, i, v);
     };
+    onig_region_free(region, 1);
   } else {
     ret = Atom(0);
+    onig_region_free(region, 1);
   }
 
   CAMLreturn(ret);
