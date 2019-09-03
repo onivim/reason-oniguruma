@@ -43,6 +43,30 @@ describe("OnigRegExp", ({describe, _}) => {
       }
       }
     });
+    test("unicode character", ({expect, _}) => {
+      let r = OnigRegExp.create("a");
+      switch (r) {
+      | Error(_) => expect.string("fail").toEqual(""); 
+      | Ok(regex) =>
+        let result = OnigRegExp.search("ç√Ωa", 0, regex);
+        expect.int(Array.length(result)).toBe(1);
+        expect.int(result[0].startPos).toBe(7);
+        expect.string(result[0].match).toEqual("a");
+      }
+
+    });
+    test("match unicode character", ({expect, _}) => {
+      let r = OnigRegExp.create("√");
+      switch (r) {
+      | Error(_) => expect.string("fail").toEqual(""); 
+      | Ok(regex) =>
+        let result = OnigRegExp.search("ç√Ωa", 0, regex);
+        expect.int(Array.length(result)).toBe(1);
+        expect.int(result[0].startPos).toBe(2);
+        expect.string(result[0].match).toEqual("√");
+      }
+
+    });
     test("returns regions if it does match", ({ expect, _}) => {
       let r = OnigRegExp.create("\\w(\\d+)");
       switch (r) {
