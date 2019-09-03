@@ -1,3 +1,3 @@
 module OnigRegExp = OnigRegExp;
 
-let _ = print_endline ("Hello");
+let _ = print_endline("Hello");
