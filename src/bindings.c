@@ -104,13 +104,14 @@ CAMLprim value reonig_create(value vPattern) {
   CAMLreturn(result);
 }
 
-CAMLprim value reonig_search(value vStr, value vPos, value vEnd,
+CAMLprim value reonig_search(value vStr, value vPos,
                              value vRegExp) {
-  CAMLparam4(vStr, vPos, vEnd, vRegExp);
+  CAMLparam3(vStr, vPos, vRegExp);
+  CAMLlocal2(ret,v);
 
   UChar *searchData = String_val(vStr);
   size_t position = Int_val(vPos);
-  size_t end = Int_val(vEnd);
+  size_t end = strlen(searchData);
 
   regexp_W *p = Data_custom_val(vRegExp);
   regex_t *regex = p->regexp;
@@ -120,5 +121,29 @@ CAMLprim value reonig_search(value vStr, value vPos, value vEnd,
       onig_search(regex, searchData, searchData + end, searchData + position,
                   searchData + end, region, ONIG_OPTION_NONE);
 
-  CAMLreturn(Val_none);
+  if (status != ONIG_MISMATCH) {
+    int num = region->num_regs;
+    ret = caml_alloc(num, 0);
+    for (int i = 0; i < num; i++) {
+      v = caml_alloc(2, 0); 
+      int start = *(region->beg + i);
+      if (start < 0) {
+        start = 0;
+      }
+
+      int length = *(region->end + i) - *(region->beg + i);
+      if (length < 0) {
+        length = 0;
+      }
+      
+      Store_field(v, 0, Val_int(start));
+      Store_field(v, 1, Val_int(length));
+
+      Store_field(ret, i, v);
+    };
+  } else {
+    ret = Atom(0);
+  }
+
+  CAMLreturn(ret);
 };

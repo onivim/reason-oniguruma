@@ -33,13 +33,31 @@ describe("OnigRegExp", ({describe, _}) => {
   });
   describe("search", ({test, _}) => {
 
-    test("returns None if it does not match", ({ expect, _}) => {
+    test("returns empty array if it does not match", ({ expect, _}) => {
       let r = OnigRegExp.create("\\w(\\d+)");
       switch (r) {
       | Error(_) => expect.string("Fail").toEqual("");
       | Ok(regex) => {
         let result = OnigRegExp.search("-----------", 0, regex);
-        expect.bool(result == None).toBe(true);
+        expect.int(Array.length(result)).toBe(0);
+      }
+      }
+    });
+    test("returns regions if it does match", ({ expect, _}) => {
+      let r = OnigRegExp.create("\\w(\\d+)");
+      switch (r) {
+      | Error(_) => expect.string("Fail").toEqual("");
+      | Ok(regex) => {
+        let result = OnigRegExp.search("----a123---", 0, regex);
+        expect.int(Array.length(result)).toBe(2);
+        expect.int(result[0].startPos).toBe(4);
+        expect.int(result[0].endPos).toBe(8);
+        expect.int(result[0].index).toBe(0);
+        expect.int(result[0].length).toBe(4);
+        expect.int(result[1].startPos).toBe(5);
+        expect.int(result[1].endPos).toBe(8);
+        expect.int(result[1].index).toBe(1);
+        expect.int(result[1].length).toBe(3);
       }
       }
     });
