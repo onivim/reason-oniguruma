@@ -65,6 +65,17 @@ reonig_val_result_ok(value val) {
   CAMLreturn(result);
 }
 
+#define Val_none Val_int(0)
+
+static value
+reonig_val_some(value v) {
+  CAMLparam1(v);
+  CAMLlocal1(some);
+  some = caml_alloc(1, 0);
+  Store_field(some, 0, v);
+  CAMLreturn(some);
+}
+
 CAMLprim value
 reonig_create(value vPattern) {
   CAMLparam1(vPattern);
@@ -93,3 +104,20 @@ reonig_create(value vPattern) {
 
   CAMLreturn(result);
 }
+
+CAMLprim value
+reonig_search(value vStr, value vPos, value vEnd, value vRegExp) {
+  CAMLparam4(vStr, vPos, vEnd, vRegExp);
+
+  UChar *searchData = String_val(vStr);
+  size_t position = Int_val(vPos);
+  size_t end = Int_val(vEnd);
+  
+  regexp_W *p = Data_custom_val(vRegExp);
+  regex_t *regex = p->regexp;
+
+  OnigRegion *region = onig_region_new();
+  int status = onig_search(regex, searchData, searchData + end, searchData + position, searchData + end, region, ONIG_OPTION_NONE);
+  
+  CAMLreturn(Val_none);
+};
