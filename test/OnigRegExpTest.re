@@ -119,7 +119,8 @@ describe("OnigRegExp", ({describe, _}) => {
       switch (r) {
       | Error(_) => expect.string("Fail").toEqual("")
       | Ok(regex) =>
-        let result = OnigRegExp.search("@selector(windowWillClose:)", 0, regex);
+        let result =
+          OnigRegExp.search("@selector(windowWillClose:)", 0, regex);
         expect.string(result[1].match).toEqual("@selector(");
         expect.string(result[3].match).toEqual(")");
       };
