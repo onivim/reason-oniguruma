@@ -11,7 +11,7 @@ module Match = {
     str: string,
   };
 
-  let getMatch = (v: t) => {
+  let getText = (v: t) => {
     String.sub(v.str, v.startPos, v.length);
   };
 };

@@ -99,7 +99,7 @@ CAMLprim value reonig_search(value vStr, value vPos, value vRegExp) {
 
   regexp_W *p = Data_custom_val(vRegExp);
   regex_t *regex = p->regexp;
-  OnigRegion *region = onig_region_new();
+  OnigRegion *region = p->region;
   int status =
       onig_search(regex, searchData, searchData + end, searchData + position,
                   searchData + end, region, ONIG_OPTION_NONE);
@@ -127,10 +127,10 @@ CAMLprim value reonig_search(value vStr, value vPos, value vRegExp) {
 
       Store_field(ret, i, v);
     };
-    onig_region_free(region, 0);
+    onig_region_free(p->region, 0);
   } else {
     ret = Atom(0);
-    onig_region_free(region, 0);
+    onig_region_free(p->region, 0);
   }
 
   CAMLreturn(ret);

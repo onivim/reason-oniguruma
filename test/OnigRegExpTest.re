@@ -1,6 +1,7 @@
 open TestFramework;
 
 open Oniguruma;
+module Match = OnigRegExp.Match;
 
 describe("OnigRegExp", ({describe, _}) => {
   describe("allocation", ({test, _}) => {
@@ -59,8 +60,8 @@ describe("OnigRegExp", ({describe, _}) => {
       | Ok(regex) =>
         let result = OnigRegExp.search("// abc", 0, regex);
         expect.int(Array.length(result)).toBe(2);
-        expect.string(result[0].match).toEqual("// abc");
-        expect.string(result[1].match).toEqual("//");
+        expect.string(Match.getText(result[0])).toEqual("// abc");
+        expect.string(Match.getText(result[1])).toEqual("//");
       };
     });
 
@@ -81,7 +82,7 @@ describe("OnigRegExp", ({describe, _}) => {
         let result = OnigRegExp.search("ç√Ωa", 0, regex);
         expect.int(Array.length(result)).toBe(1);
         expect.int(result[0].startPos).toBe(7);
-        expect.string(result[0].match).toEqual("a");
+        expect.string(Match.getText(result[0])).toEqual("a");
       };
     });
     test("match unicode character", ({expect, _}) => {
@@ -92,7 +93,7 @@ describe("OnigRegExp", ({describe, _}) => {
         let result = OnigRegExp.search("ç√Ωa", 0, regex);
         expect.int(Array.length(result)).toBe(1);
         expect.int(result[0].startPos).toBe(2);
-        expect.string(result[0].match).toEqual("√");
+        expect.string(Match.getText(result[0])).toEqual("√");
       };
     });
     test("returns regions if it does match", ({expect, _}) => {
@@ -105,13 +106,13 @@ describe("OnigRegExp", ({describe, _}) => {
         expect.int(result[0].startPos).toBe(4);
         expect.int(result[0].endPos).toBe(8);
         expect.int(result[0].index).toBe(0);
-        expect.string(result[0].match).toEqual("a123");
+        expect.string(Match.getText(result[0])).toEqual("a123");
         expect.int(result[0].length).toBe(4);
         expect.int(result[1].startPos).toBe(5);
         expect.int(result[1].endPos).toBe(8);
         expect.int(result[1].index).toBe(1);
         expect.int(result[1].length).toBe(3);
-        expect.string(result[1].match).toEqual("123");
+        expect.string(Match.getText(result[1])).toEqual("123");
       };
     });
     test("capture group test", ({expect, _}) => {
@@ -121,8 +122,8 @@ describe("OnigRegExp", ({describe, _}) => {
       | Ok(regex) =>
         let result =
           OnigRegExp.search("@selector(windowWillClose:)", 0, regex);
-        expect.string(result[1].match).toEqual("@selector(");
-        expect.string(result[3].match).toEqual(")");
+        expect.string(Match.getText(result[1])).toEqual("@selector(");
+        expect.string(Match.getText(result[3])).toEqual(")");
       };
     });
   });
