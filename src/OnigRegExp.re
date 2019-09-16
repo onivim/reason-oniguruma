@@ -8,20 +8,16 @@ module Match = {
     startPos: int,
     length: int,
     endPos: int,
-    match: string,
+    str: string,
   };
 
-  let ofRaw = (~index, ~rawMatch, str) => {
-    let (startPos, length) = rawMatch;
-
-    let match = String.sub(str, startPos, length);
-
-    {index, startPos, endPos: startPos + length, length, match};
+  let getMatch = (v: t) => {
+    String.sub(v.str, v.startPos, v.length);
   };
 };
 
 external _create: string => result(t, string) = "reonig_create";
-external _search: (string, int, t) => array(rawMatch) = "reonig_search";
+external _search: (string, int, t) => array(Match.t) = "reonig_search";
 external _end: unit => unit = "reonig_end";
 
 let create = (re: string) => {
@@ -29,11 +25,7 @@ let create = (re: string) => {
 };
 
 let search = (str: string, startPosition: int, regexp: t) => {
-  let matches = _search(str, startPosition, regexp);
-  Array.mapi(
-    (idx, m) => {Match.ofRaw(~index=idx, ~rawMatch=m, str)},
-    matches,
-  );
+  _search(str, startPosition, regexp);
 };
 
 let test = (str: string, regexp: t) => {

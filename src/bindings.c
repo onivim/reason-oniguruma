@@ -10,11 +10,13 @@
 
 typedef struct _regexp {
   regex_t *regexp;
+  OnigRegion *region;
 } regexp_W;
 
 void reonig_finalize_regexp(value v) {
   regexp_W *p;
   p = (regexp_W *)Data_custom_val(v);
+  onig_region_free(p->region, 1);
   onig_free(p->regexp);
 };
 
@@ -74,7 +76,9 @@ CAMLprim value reonig_create(value vPattern) {
   } else {
 
     regexp_W regexpWrapper;
+    OnigRegion *region = onig_region_new();
     regexpWrapper.regexp = reg;
+    regexpWrapper.region = region;
     v = caml_alloc_custom(&regexp_custom_ops, sizeof(regexp_W), 0, 1);
     memcpy(Data_custom_val(v), &regexpWrapper, sizeof(regexp_W));
     result = reonig_val_result_ok(v);
@@ -95,7 +99,6 @@ CAMLprim value reonig_search(value vStr, value vPos, value vRegExp) {
 
   regexp_W *p = Data_custom_val(vRegExp);
   regex_t *regex = p->regexp;
-
   OnigRegion *region = onig_region_new();
   int status =
       onig_search(regex, searchData, searchData + end, searchData + position,
@@ -105,7 +108,7 @@ CAMLprim value reonig_search(value vStr, value vPos, value vRegExp) {
     int num = region->num_regs;
     ret = caml_alloc(num, 0);
     for (int i = 0; i < num; i++) {
-      v = caml_alloc(2, 0);
+      v = caml_alloc(5, 0);
       int start = *(region->beg + i);
       if (start < 0) {
         start = 0;
@@ -116,15 +119,18 @@ CAMLprim value reonig_search(value vStr, value vPos, value vRegExp) {
         length = 0;
       }
 
-      Store_field(v, 0, Val_int(start));
-      Store_field(v, 1, Val_int(length));
+      Store_field(v, 0, Val_int(i));
+      Store_field(v, 1, Val_int(start));
+      Store_field(v, 2, Val_int(length));
+      Store_field(v, 3, Val_int(start + length));
+      Store_field(v, 4, vStr);
 
       Store_field(ret, i, v);
     };
-    onig_region_free(region, 1);
+    onig_region_free(region, 0);
   } else {
     ret = Atom(0);
-    onig_region_free(region, 1);
+    onig_region_free(region, 0);
   }
 
   CAMLreturn(ret);
