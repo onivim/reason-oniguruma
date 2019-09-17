@@ -126,5 +126,21 @@ describe("OnigRegExp", ({describe, _}) => {
         expect.string(Match.getText(result[3])).toEqual(")");
       };
     });
+    test("capture group test - multiple runs", ({expect, _}) => {
+      let r = OnigRegExp.create("(@selector\\()(.*?)(\\))");
+      switch (r) {
+      | Error(_) => expect.string("Fail").toEqual("")
+      | Ok(regex) =>
+        // Run regexp with match group multiple times, verify we aren't leaking OnigRegions
+        let idx = ref(0);
+        while (idx^ < 5) {
+          let result =
+            OnigRegExp.search("@selector(windowWillClose:)", 0, regex);
+          expect.string(Match.getText(result[1])).toEqual("@selector(");
+          expect.string(Match.getText(result[3])).toEqual(")");
+          incr(idx);
+        };
+      };
+    });
   });
 });

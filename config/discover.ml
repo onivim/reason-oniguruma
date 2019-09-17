@@ -41,7 +41,7 @@ let flags_with_sanitize =
     (* There is a known leak tracked here:
        https://github.com/kkos/oniguruma/issues/31 
        TODO: Investigate upgrading to bring back ASAN for this lib *)
-    (* | Linux -> flags @ ccopt("-fsanitize=address") *)
+    (*| Linux -> flags @ ccopt("-fsanitize=address")*)
     | _ -> flags
 ;;
 
