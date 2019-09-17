@@ -127,7 +127,6 @@ describe("OnigRegExp", ({describe, _}) => {
       };
     });
     test("capture group test - multiple runs", ({expect, _}) => {
-
       let r = OnigRegExp.create("(@selector\\()(.*?)(\\))");
       switch (r) {
       | Error(_) => expect.string("Fail").toEqual("")
@@ -140,7 +139,7 @@ describe("OnigRegExp", ({describe, _}) => {
           expect.string(Match.getText(result[1])).toEqual("@selector(");
           expect.string(Match.getText(result[3])).toEqual(")");
           incr(idx);
-        }
+        };
       };
     });
   });
