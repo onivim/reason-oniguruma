@@ -1,5 +1,5 @@
 {
-  "checksum": "143616299f26c97b96b7c4a5f40205dd",
+  "checksum": "b544aa35c3de928421e267c1c9c2610a",
   "root": "reason-oniguruma@link-dev:./package.json",
   "node": {
     "reperf@1.4.0@d41d8cd9": {
@@ -53,9 +53,9 @@
       "overrides": [ "test.json" ],
       "dependencies": [
         "reperf@1.4.0@d41d8cd9", "refmterr@3.2.2@d41d8cd9",
-        "ocaml@4.8.1000@d41d8cd9", "esy-oniguruma@5.9.1001@d41d8cd9",
+        "ocaml@4.8.1000@d41d8cd9", "esy-oniguruma@5.9.1003@d41d8cd9",
         "@reason-native/rely@2.2.0@d41d8cd9",
-        "@opam/odoc@opam:1.4.1@7b0020a6", "@opam/dune@opam:1.11.3@9894df55",
+        "@opam/odoc@opam:1.4.2@187ed639", "@opam/dune@opam:1.11.3@9894df55",
         "@esy-ocaml/reason@3.5.0@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.8.1000@d41d8cd9" ]
@@ -74,14 +74,14 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "esy-oniguruma@5.9.1001@d41d8cd9": {
-      "id": "esy-oniguruma@5.9.1001@d41d8cd9",
+    "esy-oniguruma@5.9.1003@d41d8cd9": {
+      "id": "esy-oniguruma@5.9.1003@d41d8cd9",
       "name": "esy-oniguruma",
-      "version": "5.9.1001",
+      "version": "5.9.1003",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://registry.npmjs.org/esy-oniguruma/-/esy-oniguruma-5.9.1001.tgz#sha1:f7f9f13497be13e72775d410b515baa02f49f211"
+          "archive:https://registry.npmjs.org/esy-oniguruma/-/esy-oniguruma-5.9.1003.tgz#sha1:4c0659a3543c6d6993cb75e6827aa383d3125050"
         ]
       },
       "overrides": [],
@@ -445,20 +445,20 @@
         "ocaml@4.8.1000@d41d8cd9", "@opam/dune@opam:1.11.3@9894df55"
       ]
     },
-    "@opam/odoc@opam:1.4.1@7b0020a6": {
-      "id": "@opam/odoc@opam:1.4.1@7b0020a6",
+    "@opam/odoc@opam:1.4.2@187ed639": {
+      "id": "@opam/odoc@opam:1.4.2@187ed639",
       "name": "@opam/odoc",
-      "version": "opam:1.4.1",
+      "version": "opam:1.4.2",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/b2/b27f9de7993d7bb87cbcc3586b19360c#md5:b27f9de7993d7bb87cbcc3586b19360c",
-          "archive:https://github.com/ocaml/odoc/archive/1.4.1.tar.gz#md5:b27f9de7993d7bb87cbcc3586b19360c"
+          "archive:https://opam.ocaml.org/cache/md5/d7/d75ce63539040cd199d22203d46fc5f3#md5:d75ce63539040cd199d22203d46fc5f3",
+          "archive:https://github.com/ocaml/odoc/archive/1.4.2.tar.gz#md5:d75ce63539040cd199d22203d46fc5f3"
         ],
         "opam": {
           "name": "odoc",
-          "version": "1.4.1",
-          "path": "test.esy.lock/opam/odoc.1.4.1"
+          "version": "1.4.2",
+          "path": "test.esy.lock/opam/odoc.1.4.2"
         }
       },
       "overrides": [],
