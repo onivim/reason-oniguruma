@@ -29,10 +29,7 @@ describe("OnigRegExp", ({describe, _}) => {
       let r = OnigRegExp.create("(*FOO)");
       switch (r) {
       | Ok(_) => expect.int(0).toBe(1)
-      | Error(msg) =>
-        expect.string(msg).toEqual(
-          "target of repeat operator is not specified",
-        )
+      | Error(msg) => expect.string(msg).toEqual("undefined callout name")
       };
     });
   });
