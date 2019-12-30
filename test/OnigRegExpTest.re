@@ -31,7 +31,7 @@ describe("OnigRegExp", ({describe, _}) => {
       | Ok(_) => expect.int(0).toBe(1)
       | Error(msg) =>
         expect.string(msg).toEqual(
-          "target of repeat operator is not specified",
+          "undefined callout name",
         )
       };
     });
