@@ -19,14 +19,14 @@
   },
   "dependencies": {
     "@opam/dune": "^1.6.0",
+    "@opam/dune-configurator": "*",
     "@esy-ocaml/reason": "^3.4.0",
-    "@reason-native/rely": "^1.3.1",
     "refmterr": "*",
     "ocaml": ">=4.6.0",
     "esy-oniguruma": "^6.9.4000",
     "reperf": "^1.3.0"
   },
   "devDependencies": {
-    "ocaml": ">=4.6.0"
+    "ocaml": "~4.8.0"
   }
 }
