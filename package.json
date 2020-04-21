@@ -1,6 +1,6 @@
 {
   "name": "reason-oniguruma",
-  "version": "6.94.1001",
+  "version": "6.94.1002",
   "description": "Reason bindings for Oniguruma",
   "license": "MIT",
   "scripts": {
